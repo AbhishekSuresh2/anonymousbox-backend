@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const GITHUB_TOKEN = "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";
+const GITHUB_TOKEN = "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";
 const GIST_ID = "2264c757b0ebb535c5ad103ce540ed69";
 
 // Helper: Get data from Gist
