@@ -14,8 +14,12 @@ const GIST_ID = "2264c757b0ebb535c5ad103ce540ed69";
 // Helper: Get data from Gist
 async function dbRead() {
     const res = await axios.get(`https://api.github.com/gists/${GIST_ID}`, {
-        headers: { Authorization: `token ${GITHUB_TOKEN}` }
-    });
+  headers: {
+    Authorization: `Bearer ${GITHUB_TOKEN}`,
+    Accept: "application/vnd.github+json"
+  }
+});
+
     return JSON.parse(res.data.files["anonymousbox_db.json"].content);
 }
 
@@ -26,7 +30,10 @@ async function dbWrite(data) {
             "anonymousbox_db.json": { content: JSON.stringify(data, null, 2) }
         }
     }, {
-        headers: { Authorization: `token ${GITHUB_TOKEN}` }
+        headers: {
+    Authorization: `Bearer ${GITHUB_TOKEN}`,
+    Accept: "application/vnd.github+json"
+  }
     });
 }
 
