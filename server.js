@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const GIST_ID = process.env.GIST_ID;
+const GIST_ID = "2264c757b0ebb535c5ad103ce540ed69";
 
 // Helper: Get data from Gist
 async function dbRead() {
