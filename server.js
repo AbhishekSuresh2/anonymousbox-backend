@@ -2,13 +2,14 @@ const express = require('express');
 const axios = require('axios');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
+require("dotenv").config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const GITHUB_TOKEN = "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";
-const GIST_ID = "2264c757b0ebb535c5ad103ce540ed69";
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GIST_ID = process.env.GIST_ID;
 
 // Helper: Get data from Gist
 async function dbRead() {
