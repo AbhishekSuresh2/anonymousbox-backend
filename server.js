@@ -161,6 +161,40 @@ app.get("/api/messages", async (req, res) => {
   }
 });
 
+/* ---------------- DELETE MESSAGE ---------------- */
+
+app.delete("/api/messages/:id", async (req, res) => {
+  try {
+    const messageId = req.params.id;
+    const username = req.headers.authorization; // This is the 'token' from frontend
+
+    if (!username) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const db = await dbRead();
+
+    // 1. Find the message to make sure it belongs to the person deleting it
+    const msgIndex = db.messages.findIndex(
+      (m) => m._id === messageId && m.recipient === username
+    );
+
+    if (msgIndex === -1) {
+      return res.status(404).json({ error: "Message not found or unauthorized" });
+    }
+
+    // 2. Remove the message from the array
+    db.messages.splice(msgIndex, 1);
+
+    // 3. Save the updated database back to the Gist
+    await dbWrite(db);
+
+    res.json({ success: true, message: "Deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Delete failed" });
+  }
+});
 /* ---------------- EXPORT ---------------- */
 
 module.exports = app;
